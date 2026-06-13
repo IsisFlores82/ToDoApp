@@ -2,9 +2,9 @@ import { useEffect, useState } from "react";
 
 import type { ToDoItem } from "../../models/ToDoItem";
 
-import appDraw1 from "../assets/images/graphic1.png";
-import appDraw2 from "../assets/images/graphic2.png";
-import appDraw3 from "../assets/images/graphic3.png";
+import appDraw1 from "../../assets/images/graphic1.png";
+import appDraw2 from "../../assets/images/graphic2.png";
+import appDraw3 from "../../assets/images/graphic3.png";
 
 interface ToDoModalProps {
   isOpen: boolean;

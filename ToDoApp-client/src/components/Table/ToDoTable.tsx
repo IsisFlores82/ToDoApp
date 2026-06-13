@@ -23,7 +23,7 @@ function ToDoTable({
       <table>
         <thead>
           <tr>
-            <th className="">Status</th>
+            <th className="col-status">Status</th>
             <th>Name</th>
             {/*ascend and descend sort of priority*/}
             <th onClick={() => onSort("priority")} className="col-priority">

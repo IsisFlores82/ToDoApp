@@ -28,6 +28,11 @@ th {
   cursor: "pointer";
 }
 
+.col-status {
+  width: 80px;
+  cursor: "pointer";
+}
+
 td {
   padding-top: 10px;
   padding-bottom: 10px;

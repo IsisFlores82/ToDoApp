@@ -1,0 +1,26 @@
+.tabs {
+  display: flex;
+  gap: 2px;
+  margin-bottom: 16px;
+}
+
+.tab {
+  background: #c0c0c0;
+
+  border-top: 2px solid white;
+  border-left: 2px solid white;
+
+  border-right: 2px solid #404040;
+  border-bottom: 2px solid #404040;
+
+  padding: 8px 16px;
+}
+
+.tab.active {
+  position: relative;
+  z-index: 2;
+
+  border-bottom: 2px solid #c0c0c0;
+
+  margin-bottom: -2px;
+}

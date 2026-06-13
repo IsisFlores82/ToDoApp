@@ -4,6 +4,7 @@ using TodoApp.API.Data;
 using TodoApp.API.Models;
 
 namespace TodoApp.API.Controllers;
+//API ENDPOINTS
 
 [ApiController]
 [Route("api/[controller]")]

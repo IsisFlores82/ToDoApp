@@ -1,10 +1,9 @@
-import type { ToDoItem } from "../models/ToDoItem";
+import type { ToDoItem } from "../../models/ToDoItem";
 
 interface ToDoTableProps {
   todos: ToDoItem[];
   onToggleCompleted: (todo: ToDoItem) => void;
   onSelectToDo: (todo: ToDoItem) => void;
-  onEditToDo: (todo: ToDoItem) => void;
 
   onSort: (field: "deadline" | "priority") => void;
   sortField: "deadline" | "priority" | null;
@@ -15,7 +14,6 @@ function ToDoTable({
   todos,
   onToggleCompleted,
   onSelectToDo,
-  onEditToDo,
   onSort,
   sortField,
   sortDirection,
@@ -27,11 +25,14 @@ function ToDoTable({
           <tr>
             <th className="">Status</th>
             <th>Name</th>
+            {/*ascend and descend sort of priority*/}
             <th onClick={() => onSort("priority")} className="col-priority">
               Priority
               {sortField === "priority" &&
                 (sortDirection === "asc" ? " ▲" : " ▼")}
             </th>
+
+            {/*ascend and descend sort of deathline*/}
             <th onClick={() => onSort("deadline")} className="col-due">
               Due
               {sortField === "deadline" &&
@@ -62,6 +63,7 @@ function ToDoTable({
 
               <td className="td-text">{todo.priority}</td>
 
+              {/*date formating*/}
               <td className="td-text">
                 {new Date(todo.deadline).toLocaleDateString("en-US", {
                   weekday: "short",

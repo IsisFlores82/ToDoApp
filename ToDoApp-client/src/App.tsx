@@ -8,9 +8,9 @@ import { deleteTask } from "./services/ToDoApi";
 
 import appIcon from "./assets/images/graphic4.png";
 
-import TodoTable from "./components/ToDoTable";
-import Tabs from "./components/Tabs";
-import TodoModal from "./components/ToDoModal";
+import TodoTable from "./components/Table/ToDoTable";
+import Tabs from "./components/Tabs/Tabs";
+import TodoModal from "./components/Modal/ToDoModal";
 
 function App() {
   const [todos, setTodos] = useState<ToDoItem[]>([]);
@@ -22,7 +22,38 @@ function App() {
   );
 
   const [sortDirection, setSortDirection] = useState<"asc" | "desc">("asc");
+  const filteredTodos =
+    activeTab === "todo"
+      ? todos.filter((x) => !x.isCompleted)
+      : todos.filter((x) => x.isCompleted);
 
+  const sortedTodos = [...filteredTodos].sort((a, b) => {
+    if (!sortField) return 0;
+
+    let result = 0;
+
+    if (sortField === "deadline") {
+      result = new Date(a.deadline).getTime() - new Date(b.deadline).getTime();
+    }
+
+    if (sortField === "priority") {
+      const priorityValue = {
+        Low: 1,
+        Medium: 2,
+        High: 3,
+      };
+
+      result =
+        priorityValue[a.priority as keyof typeof priorityValue] -
+        priorityValue[b.priority as keyof typeof priorityValue];
+    }
+
+    return sortDirection === "asc" ? result : -result;
+  });
+
+  {
+    /*HANDLES ------*/
+  }
   async function handleCreateToDo(todo: {
     title: string;
     notes: string;
@@ -61,15 +92,8 @@ function App() {
     const updatedTodos = await getTodos();
 
     setTodos(updatedTodos);
-
     setSelectedToDo(null);
-
     setIsModalOpen(false);
-  }
-
-  function handleEditToDo(todo: ToDoItem) {
-    setSelectedToDo(todo);
-    setIsModalOpen(true);
   }
 
   function handleSort(field: "deadline" | "priority") {
@@ -97,37 +121,9 @@ function App() {
     loadTodos();
   }, []);
 
-  const filteredTodos =
-    activeTab === "todo"
-      ? todos.filter((x) => !x.isCompleted)
-      : todos.filter((x) => x.isCompleted);
-
-  const sortedTodos = [...filteredTodos].sort((a, b) => {
-    if (!sortField) return 0;
-
-    let result = 0;
-
-    if (sortField === "deadline") {
-      result = new Date(a.deadline).getTime() - new Date(b.deadline).getTime();
-    }
-
-    if (sortField === "priority") {
-      const priorityValue = {
-        Low: 1,
-        Medium: 2,
-        High: 3,
-      };
-
-      result =
-        priorityValue[a.priority as keyof typeof priorityValue] -
-        priorityValue[b.priority as keyof typeof priorityValue];
-    }
-
-    return sortDirection === "asc" ? result : -result;
-  });
-
   return (
     <div className="win98-window">
+      {/*Title ------*/}
       <div className="win98-titlebar">
         <div className="titlebar-text">
           <img src={appIcon} alt="ToDo.98" />
@@ -141,15 +137,16 @@ function App() {
         </div>
       </div>
 
+      {/*Tabs ------*/}
       <div className="win98-content">
         <Tabs activeTab={activeTab} onChange={setActiveTab} />
         <div className="main-panel">
+          {/*Table ------*/}
           <div className="table-container">
             <TodoTable
               todos={sortedTodos}
               onToggleCompleted={handleToggleCompleted}
               onSelectToDo={setSelectedToDo}
-              onEditToDo={handleEditToDo}
               onSort={handleSort}
               sortField={sortField}
               sortDirection={sortDirection}
@@ -165,6 +162,7 @@ function App() {
             onDelete={handleDeleteToDo}
           />
 
+          {/*Buttons ------*/}
           <div className="panel-actions">
             <button
               onClick={() => {

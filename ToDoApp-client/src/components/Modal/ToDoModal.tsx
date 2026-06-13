@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 
-import type { ToDoItem } from "../models/ToDoItem";
+import type { ToDoItem } from "../../models/ToDoItem";
 
 import appDraw1 from "../assets/images/graphic1.png";
 import appDraw2 from "../assets/images/graphic2.png";
@@ -70,6 +70,7 @@ function ToDoModal({
           <span>{isEditMode ? "Edit Task" : "Create New Task"}</span>
         </div>
 
+        {/*Tourquese side panel*/}
         <div className="modal-body">
           <div className="modal-sidebar">
             <img src={appDraw3} alt="" className="icon-calendar" />
@@ -77,6 +78,7 @@ function ToDoModal({
             <img src={appDraw1} alt="" className="icon-note" />
           </div>
 
+          {/*FORM*/}
           <div className="modal-content">
             <h2>{isEditMode ? "Edit Task" : "Create New Task"}</h2>
 
@@ -151,6 +153,7 @@ function ToDoModal({
 
             <div className="modal-divider"></div>
 
+            {/*Buttons*/}
             <div className="modal-actions">
               <button
                 onClick={() => {
@@ -177,6 +180,7 @@ function ToDoModal({
                 OK
               </button>
 
+              {/*visible only if you are editing*/}
               {isEditMode && toDo && (
                 <button
                   onClick={() => {

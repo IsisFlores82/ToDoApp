@@ -1,0 +1,28 @@
+@font-face {
+  font-family: "Win98";
+  src: url("../assets/font/MSW98UI-Regular.otf") format("opentype");
+  font-weight: normal;
+}
+
+@font-face {
+  font-family: "Win98";
+  src: url("../assets/font/MSW98UI-Bold.otf") format("opentype");
+  font-weight: bold;
+}
+
+* {
+  font-family: "Win98", Tahoma, sans-serif;
+}
+
+body {
+  margin: 0;
+  background: #008080;
+  color: black;
+}
+
+h2 {
+  color: black;
+  text-align: left;
+  padding-bottom: 10px;
+  font-weight: bold;
+}

@@ -163,15 +163,15 @@ The application features a retro Windows 98-inspired design, including:
 
 ### Task List
 
-_Add screenshot here_
-
+![Task List](ReadMeAssets/ToDoListSS1.png)
+![Task List Ready](ReadMeAssets/ToDoListSS3.png)
 ### Create Task
 
-_Add screenshot here_
+![Create Task](ReadMeAssets/ToDoListSS2.png)
 
 ### Edit Task
 
-_Add screenshot here_
+![Edit Task](ReadMeAssets/ToDoListSS4.png)
 
 ---
 

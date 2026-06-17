@@ -6,6 +6,9 @@ import appDraw1 from "../../assets/images/graphic1.png";
 import appDraw2 from "../../assets/images/graphic2.png";
 import appDraw3 from "../../assets/images/graphic3.png";
 
+import errorSFX from "../../assets/SFX/error.mp3";
+import recicleSFX from "../../assets/SFX/recicle.mp3";
+
 interface ToDoModalProps {
   isOpen: boolean;
   onClose: () => void;
@@ -37,6 +40,8 @@ function ToDoModal({
   const [notes, setNotes] = useState("");
   const [priority, setPriority] = useState("");
   const [deadline, setDeadline] = useState("");
+  const errorSFXAudio = new Audio(errorSFX);
+  const recicleSFXAudio = new Audio(recicleSFX);
 
   useEffect(() => {
     if (toDo) {
@@ -45,10 +50,13 @@ function ToDoModal({
       setPriority(toDo.priority);
       setDeadline(toDo.deadline.split("T")[0]);
     } else {
+      const tomorrow = new Date();
+      tomorrow.setDate(tomorrow.getDate() + 1); //today + one day
+
       setTitle("");
       setNotes("");
       setPriority("Medium");
-      setDeadline("");
+      setDeadline(tomorrow.toISOString().split("T")[0]); //default date on new task is tomorrw
     }
   }, [toDo]);
 
@@ -59,10 +67,11 @@ function ToDoModal({
       style={{
         position: "fixed",
         inset: 0,
-        background: "rgba(0,0,0,.4)",
+        background: "rgba(0,0,0,.5)",
         display: "flex",
         justifyContent: "center",
         alignItems: "center",
+        zIndex: 3,
       }}
     >
       <div className="win98-window">
@@ -157,6 +166,12 @@ function ToDoModal({
             <div className="modal-actions">
               <button
                 onClick={() => {
+                  if (!title.trim() || !deadline) {
+                    errorSFXAudio.currentTime = 0;
+                    errorSFXAudio.play();
+                    return;
+                  }
+
                   if (isEditMode && toDo) {
                     onUpdate({
                       ...toDo,
@@ -185,6 +200,8 @@ function ToDoModal({
                 <button
                   onClick={() => {
                     onDelete(toDo.id);
+                    recicleSFXAudio.currentTime = 0;
+                    recicleSFXAudio.play();
                   }}
                 >
                   Delete

@@ -7,6 +7,7 @@ import { updateTask } from "./services/ToDoApi";
 import { deleteTask } from "./services/ToDoApi";
 
 import appIcon from "./assets/images/graphic4.png";
+import notifySFX from "./assets/SFX/notify.mp3";
 
 import TodoTable from "./components/Table/ToDoTable";
 import Tabs from "./components/Tabs/Tabs";
@@ -21,6 +22,9 @@ function App() {
     "deadline",
   );
 
+  const notifySFXAudio = new Audio(notifySFX);
+
+  //sort of date and priority of task, asce and descen order
   const [sortDirection, setSortDirection] = useState<"asc" | "desc">("asc");
   const filteredTodos =
     activeTab === "todo"
@@ -68,13 +72,19 @@ function App() {
   }
 
   async function handleToggleCompleted(todo: ToDoItem) {
+    const willBeCompleted = !todo.isCompleted;
+
     await updateTask(todo.id, {
       ...todo,
-      isCompleted: !todo.isCompleted,
+      isCompleted: willBeCompleted,
     });
 
-    const updatedTodos = await getTodos();
+    if (willBeCompleted) {
+      notifySFXAudio.currentTime = 0;
+      notifySFXAudio.play();
+    }
 
+    const updatedTodos = await getTodos();
     setTodos(updatedTodos);
   }
 
@@ -141,6 +151,11 @@ function App() {
       <div className="win98-content">
         <Tabs activeTab={activeTab} onChange={setActiveTab} />
         <div className="main-panel">
+          <p>
+            {activeTab === "todo"
+              ? "All the tasks you have to complete."
+              : "Tasks you have already completed!"}
+          </p>
           {/*Table ------*/}
           <div className="table-container">
             <TodoTable
@@ -152,7 +167,6 @@ function App() {
               sortDirection={sortDirection}
             />
           </div>
-
           <TodoModal
             isOpen={isModalOpen}
             onClose={() => setIsModalOpen(false)}
@@ -161,7 +175,6 @@ function App() {
             onUpdate={handleSaveToDo}
             onDelete={handleDeleteToDo}
           />
-
           {/*Buttons ------*/}
           <div className="panel-actions">
             <button

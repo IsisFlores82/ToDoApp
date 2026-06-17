@@ -2,11 +2,13 @@ import type { ToDoItem } from "../models/ToDoItem";
 
 const API_URL = "http://localhost:5018/api/todos";
 
+//API ENDPOINTS ------------
+
 export async function getTodos(): Promise<ToDoItem[]> {
   const response = await fetch(API_URL);
 
   if (!response.ok) {
-    throw new Error("Error obteniendo tareas");
+    throw new Error("Error getting tasks");
   }
 
   return await response.json();
@@ -30,7 +32,7 @@ export async function createTask(todo: {
   });
 
   if (!response.ok) {
-    throw new Error("Error creando tarea");
+    throw new Error("Error creating a task");
   }
 
   return await response.json();
@@ -57,7 +59,7 @@ export async function updateTask(
   });
 
   if (!response.ok) {
-    throw new Error("Error actualizando tarea");
+    throw new Error("Error updating a task");
   }
 }
 
@@ -67,6 +69,6 @@ export async function deleteTask(id: number) {
   });
 
   if (!response.ok) {
-    throw new Error("Error eliminando tarea");
+    throw new Error("Error deleating a task");
   }
 }
